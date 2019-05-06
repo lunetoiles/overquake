@@ -111,16 +111,28 @@
     
     //replace R[0] with R[1] in copy 2 and R[3] in copy 3
     R[0] <= C
-    wait {time between shots}
+    skip if ( not( {time between shots} < R[0] ) ) {
+        //unlock first, then despawn
+        wait {time between shots}
+        play effect(debuff impact sound ep only)
+        N <= 1 //adjust for copies
+        F <= false
+        skip if ( R[0] - {time between shots} < 0.25, 1)
+        wait ( R[0] - {time between shots} ) restart if true
+        stop chasing( O )
+        O <= (-999,-999,-999)
+        loop if true
+        abort
+    }
+    // despawn first, then unlock
+    wait R[0]
+    stop chasing( O )
+    O <= (-999,-999,-999)
+    wait ( {time between shots} - R[0] )
     play effect(debuff impact sound ep only)
     N <= 1 //adjust for copies
     F <= false
-    wait ( R[0] - {time between shots} ) restart if true
-    stop chasing( O )
-    O <= (-999,-999,-999)
     loop if true
-    
-
 
 **orb damage copy 1**
 
