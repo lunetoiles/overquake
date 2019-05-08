@@ -52,8 +52,8 @@
     U
     V
     W - Player weapon
-    X
-    Y
+    X - requested player weapon
+    Y - orbs finished spawning
     Z - Player state
     
 ## Global state machine
