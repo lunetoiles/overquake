@@ -1,0 +1,131 @@
+    A: target player
+    B: random horizontal angle
+    C: random verticle angle
+    //in front of the gun effect, target or no target, enemy version
+    create effect(
+        visible to:
+            filtered array(
+                array: remove from array(all players, ep)
+                condition: ep:W == 4 && ep:F
+            )
+        effect: orb
+        color:  team 2
+        position:
+            add(
+                world vector of({gun position},ep, rotation and translation),
+                vector(
+                    x: random real({wiggle range})
+                    y: random real({wiggle range})
+                    z: random real({wiggle range})
+                )
+            )
+        size: 0.25
+    )
+
+    //damage effect, no target version, player version
+    create effect(
+        visible to:
+            filtered array(
+                array: ep
+                condition: ep:W == 4 && ep:F && ep:A == null
+            )
+        effect: orb
+        color:  team 1
+        position:
+            add (
+                add(
+                    eye position(ep),
+                    multiply(
+                        direction from angles(B,C)
+                        distance between(
+                            eye position(ep),
+                            ray cast position(
+                                start: eye position(ep)
+                                end: eye position(ep) + direction from angles(B,C) * {max distance}
+                            )
+                        )
+                    )
+                ),
+                vector(
+                    x: random real({wiggle range})
+                    y: random real({wiggle range})
+                    z: random real({wiggle range})
+                )
+            )
+        size: 0.25
+    )
+
+    //damage effect, no target version, enemy version
+    create effect(
+        visible to:
+            filtered array(
+                array: remove from array(all players, ep)
+                condition: ep:W == 4 && ep:F && ep:A == null
+            )
+        effect: orb
+        color:  team 2
+        position:
+            add (
+                add(
+                    eye position(ep),
+                    multiply(
+                        direction from angles(A,B)
+                        distance between(
+                            eye position(ep),
+                            ray cast position(
+                                start: eye position(ep)
+                                end: eye position(ep) + direction from angles(A,B) * {max distance}
+                            )
+                        )
+                    )
+                ),
+                vector(
+                    x: random real({wiggle range})
+                    y: random real({wiggle range})
+                    z: random real({wiggle range})
+                )
+            )
+        size: 0.25
+    )
+
+    //damage effect, target version, player version
+    create effect(
+        visible to:
+            filtered array(
+                array: ep
+                condition: ep:W == 4 && ep:F && ep:A != null
+            )
+        effect: orb
+        color:  team 1
+        position:
+            add (
+                position of(A) + {body offset}
+                vector(
+                    x: random real({wiggle range})
+                    y: random real({wiggle range})
+                    z: random real({wiggle range})
+                )
+            )
+        size: 0.25
+    )
+
+    //damage effect, target version, enemy version
+    create effect(
+        visible to:
+            filtered array(
+                array: remove from array(all players, ep)
+                condition: ep:W == 4 && ep:F && ep:A != null
+            )
+        effect: orb
+        color:  team 2
+        position:
+            add (
+                position of(A) + {body offset}
+                vector(
+                    x: random real({wiggle range})
+                    y: random real({wiggle range})
+                    z: random real({wiggle range})
+                )
+            )
+        size: 0.25
+    )
