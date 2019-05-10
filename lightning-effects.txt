@@ -9,15 +9,11 @@
                 condition: ep:W == 4 && ep:F
             )
         effect: orb
-        color:  team 2
+        color:  red
         position:
             add(
-                world vector of({gun position},ep, rotation and translation),
-                vector(
-                    x: random real({wiggle range})
-                    y: random real({wiggle range})
-                    z: random real({wiggle range})
-                )
+                position of(ep) + up*{shoulder height} + facing direction of(ep) * {gun length},
+                facing direction of(ep) * random real({wiggle})
             )
         size: 0.25
     )
@@ -30,20 +26,14 @@
                 condition: ep:W == 4 && ep:F && ep:A == null
             )
         effect: orb
-        color:  team 1
+        color:  red
         position:
             add (
                 add(
                     eye position(ep),
                     multiply(
-                        direction from angles(B,C)
-                        distance between(
-                            eye position(ep),
-                            ray cast position(
-                                start: eye position(ep)
-                                end: eye position(ep) + direction from angles(B,C) * {max distance}
-                            )
-                        )
+                        direction from angles(B+ horizontal facing angle(ep),C + verticle facing angle(ep)),
+                        {distance}
                     )
                 ),
                 vector(
@@ -63,20 +53,14 @@
                 condition: ep:W == 4 && ep:F && ep:A == null
             )
         effect: orb
-        color:  team 2
+        color:  blue
         position:
             add (
                 add(
                     eye position(ep),
                     multiply(
-                        direction from angles(A,B)
-                        distance between(
-                            eye position(ep),
-                            ray cast position(
-                                start: eye position(ep)
-                                end: eye position(ep) + direction from angles(A,B) * {max distance}
-                            )
-                        )
+                        direction from angles(B+ horizontal facing angle(ep),C + verticle facing angle(ep)),
+                        {distance}
                     )
                 ),
                 vector(
