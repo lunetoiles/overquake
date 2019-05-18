@@ -3,4 +3,4 @@ Quake as an Overwatch workshop mode
 
 ## Codes
 
-Coming Soon!
+in progress build (custom weapons and weapon swapping only): SW34P
